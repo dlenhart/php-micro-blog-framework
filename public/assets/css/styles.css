@@ -1,0 +1,59 @@
+body {
+    font: 20px Helvetica, sans-serif;
+    color: #333;
+    padding: 20px;
+    background: #f1f1f1;
+  }
+
+  .nav {
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .container {
+      width: 1000px;
+      margin: 0 auto;
+  }
+
+  /* Header/Blog Title */
+  .header {
+    padding: 30px;
+    font-size: 40px;
+    text-align: center;
+    background-image: url("/assets/images/code_header_ddl.png");
+    background-repeat: no-repeat;
+    opacity: 0.5;
+  }
+
+  .header > h2 {
+    color: white;
+    text-shadow: 4px 4px black;
+  }
+
+  /* middle column */
+  .middlecolumn {
+    width: 100%;
+  }
+
+  /* Add a card effect for articles */
+  .card {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
+  }

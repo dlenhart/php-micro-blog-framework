@@ -1,0 +1,5 @@
+{
+    "maintenance": false,
+    "template": "maintenance.view.php",
+    "status": 503
+}
