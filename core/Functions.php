@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Core\Http\Response;
 use App\Core\Http\Request;
@@ -9,7 +9,7 @@ if (! function_exists('view')) {
      *
      * @param string $name - name of view
      * @param array  $data - optional data to inject
-     * 
+     *
      * @return view
      */
     function view($name, $data = [])
@@ -22,13 +22,14 @@ if (! function_exists('view')) {
 if (! function_exists('notFound')) {
     /**
      * Return a not found view
-     * 
+     *
      * @param string $message - message for view
-     * 
+     *
      * @return view
      */
-    function notFound($message)
+    function notFound($message, $status = 404)
     {
+        http_response_code($status);
         return view('notfound', ['message' => $message]);
     }
 }
@@ -39,7 +40,7 @@ if (! function_exists('json')) {
      *
      * @param array $data   - array to convert
      * @param int   $status - http status code
-     * 
+     *
      * @return App\Core\Response
      */
     function json($data = [], $status = 200)
@@ -55,15 +56,15 @@ if (! function_exists('arraySearch')) {
      * @param string $query - search term
      * @param array  $array - array to search in
      * @param int    $depth - how deep
-     * 
+     *
      * @return mixed
      */
     function arraySearch($query, $array, $depth = 0)
     {
-        if (is_string($query)) { 
+        if (is_string($query)) {
             $query = explode(".", $query);
         }
-        
+
         $search = $query[$depth];
 
         if (isset($array[$search])) {
@@ -83,7 +84,7 @@ if (! function_exists('conifg')) {
      * Return configuration value
      *
      * @param string $key - search term
-     * 
+     *
      * @return mixed
      */
     function config($key)
@@ -98,7 +99,7 @@ if (! function_exists('dd')) {
      * Dump and Dieeee!
      *
      * @param array $data - data to dump
-     * 
+     *
      * @return void
      */
     function dd($data)
@@ -106,7 +107,7 @@ if (! function_exists('dd')) {
         echo '<pre>';
         var_dump($data);
         echo '</pre>';
-        
+
         die();
     }
 }
@@ -114,7 +115,7 @@ if (! function_exists('dd')) {
 if (! function_exists('params')) {
     /**
      * Request parameters
-     * 
+     *
      * @return App\Core\Request
      */
     function params()
@@ -126,11 +127,11 @@ if (! function_exists('params')) {
 if (! function_exists('redirect')) {
     /**
      * Redirect
-     * 
+     *
      * @param string $to      - page to redirect
      * @param int    $status  - http status code
      * @param array  $headers - optional headers
-     * 
+     *
      * @return App\Core\Response
      */
     function redirect($to = null, $status = 302, $headers = [])
@@ -142,18 +143,18 @@ if (! function_exists('redirect')) {
 if (! function_exists('flatten')) {
     /**
      * Flatten array
-     * 
+     *
      * @param array $array - array to flatten
-     * 
+     *
      * @return array
      */
     function flatten(array $array)
     {
         $return = array();
-        
+
         array_walk_recursive(
             $array, function ($a) use (&$return) {
-                $return[] = $a; 
+                $return[] = $a;
             }
         );
         return $return;

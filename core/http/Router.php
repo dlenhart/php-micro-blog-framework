@@ -94,10 +94,8 @@ class Router
     {
         if (!isset($this->routes[$type])) {
             Logger::error("HTTP method not allowed: {$uri} - {$type}");
-            
-            if (config('configuration.debug')) {
-                throw new \Exception('HTTP method not allowed here!');
-            }
+
+            return notFound('405 | METHOD NOT ALLOWED.', 405);
         }
 
         if ($this->hasRoute($uri, $type)) {
@@ -106,11 +104,9 @@ class Router
             return $this->action($split[0], $split[1]);
         }
 
-        if (config('configuration.logging_enabled')) {
-            Logger::error("File not found requesting: {$uri} - {$type}");
-        }
+        Logger::error("File not found requesting: {$uri} - {$type}");
 
-        return view('notfound', ['message' => '404 | FILE NOT FOUND']);
+        return notFound('404 | FILE NOT FOUND.', 404);
     }
 
     /**
@@ -127,11 +123,9 @@ class Router
         $callController = new $callController;
 
         if (! method_exists($callController, $method)) {
-            if (config('configuration.debug')) {
-                throw new \Exception(
-                    "{$controller} is unable to call the '{$method}' method!"
-                );
-            }
+            throw new \Exception(
+                "{$controller} is unable to call the '{$method}' method!"
+            );
         }
 
         return $callController->$method();
