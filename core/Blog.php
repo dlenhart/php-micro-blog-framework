@@ -6,10 +6,39 @@ use App\Core\Log\Logger;
 
 class Blog
 {
+    /**
+     * $content - content variable
+     *
+     * @var string
+     */
     public $content;
+
+    /**
+     * $meta_data - meta data variable
+     *
+     * @var string
+     */
     public $meta_data;
+
+    /**
+     * $filename - name of file
+     *
+     * @var string
+     */
     private $filename;
+
+    /**
+     * $files_array - contains file names
+     *
+     * @var array
+     */
     private $files_array = [];
+
+    /**
+     * $articles_array - contains articles/posts
+     *
+     * @var array
+     */
     private $articles_array = [];
 
     /**
@@ -59,7 +88,7 @@ class Blog
 
      /**
       * Posts - get all valid posts
-      * 
+      *
       * @param string $dir - directory containing posts
       *
       * @return array
@@ -88,7 +117,7 @@ class Blog
 
      /**
       * Read Directory - get all valid post files
-      * 
+      *
       * @param string $dir - Directory to read from
       *
       * @return mixed
@@ -100,21 +129,21 @@ class Blog
 
             foreach ($files as $file) {
                 $filename = $dir . $file;
-    
+
                 if ($this->checkFileType($filename)) {
                     $this->files_array[] = $filename;
                 }
             }
-    
+
             return $this->files_array;
         }
 
-        return false;        
+        return false;
     }
 
      /**
       * Check File Type - validate file extension
-      * 
+      *
       * @param string $filename - filename to validate
       *
       * @return boolean
@@ -132,7 +161,7 @@ class Blog
 
     /**
      * In Config - value is in configuration setting
-     * 
+     *
      * @param string $value - string to search for
      *
      * @return boolean
@@ -144,7 +173,7 @@ class Blog
 
      /**
       * Sort - sort array by meta date
-      * 
+      *
       * @param array $array - array to sort
       *
       * @return array
@@ -160,14 +189,14 @@ class Blog
         return $array;
     }
 
-    private function paginate($array, $page, $offset) 
+    private function paginate($array, $page, $offset)
     {
         //
     }
 
     /**
      * Split File Path - split path by slashes
-     * 
+     *
      * @param string $string - filepath to split
      *
      * @return string

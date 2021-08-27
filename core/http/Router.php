@@ -16,14 +16,14 @@ class Router
 
     /**
      * Load routes
-     * 
+     *
      * @param string $file - file to load
-     * 
+     *
      * @return static
      */
     public static function load($file)
     {
-        $router = new static; 
+        $router = new static;
 
         include $file;
 
@@ -32,9 +32,9 @@ class Router
 
     /**
      * Set routes
-     * 
+     *
      * @param string $routes - set routes
-     * 
+     *
      * @return void
      */
     public function define($routes)
@@ -44,10 +44,10 @@ class Router
 
     /**
      * GET - Set GET route
-     * 
+     *
      * @param string $uri        - uri
      * @param string $controller - controller
-     * 
+     *
      * @return void
      */
     public function get($uri, $controller)
@@ -57,10 +57,10 @@ class Router
 
     /**
      * POST - Set POST route
-     * 
+     *
      * @param string $uri        - uri
      * @param string $controller - controller
-     * 
+     *
      * @return void
      */
     public function post($uri, $controller)
@@ -74,7 +74,7 @@ class Router
      *
      * @param string $uri  - uri to validate
      * @param string $type - http method to validate
-     * 
+     *
      * @return boolean
      */
     public function hasRoute(string $uri, string $type)
@@ -87,18 +87,17 @@ class Router
      *
      * @param string $uri  - uri
      * @param string $type - method
-     * 
+     *
      * @return mixed
      */
     public function dispatch($uri, $type)
     {
         if (!isset($this->routes[$type])) {
-            if (config('configuration.logging_enabled')) { 
-                Logger::error("HTTP method not allowed: {$uri} - {$type}");
-            }
-            if (config('configuration.debug')) { 
+            Logger::error("HTTP method not allowed: {$uri} - {$type}");
+            
+            if (config('configuration.debug')) {
                 throw new \Exception('HTTP method not allowed here!');
-            }            
+            }
         }
 
         if ($this->hasRoute($uri, $type)) {
@@ -107,10 +106,10 @@ class Router
             return $this->action($split[0], $split[1]);
         }
 
-        if (config('configuration.logging_enabled')) { 
+        if (config('configuration.logging_enabled')) {
             Logger::error("File not found requesting: {$uri} - {$type}");
         }
-        
+
         return view('notfound', ['message' => '404 | FILE NOT FOUND']);
     }
 
@@ -119,16 +118,16 @@ class Router
      *
      * @param string $controller - controller
      * @param string $method     - method
-     * 
+     *
      * @return mixed
      */
-    protected function action($controller, $method) 
+    protected function action($controller, $method)
     {
         $callController = "App\\Controllers\\{$controller}";
         $callController = new $callController;
 
         if (! method_exists($callController, $method)) {
-            if (config('configuration.debug')) { 
+            if (config('configuration.debug')) {
                 throw new \Exception(
                     "{$controller} is unable to call the '{$method}' method!"
                 );
